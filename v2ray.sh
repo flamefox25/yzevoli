@@ -1,6 +1,5 @@
 #!/bin/bash
 # v2ray Ubuntu系统一键安装脚本
-# Author: hijk<https://hijk.pp.a>
 
 
 RED="\033[31m"      # Error message
@@ -75,14 +74,14 @@ colorEcho() {
 
 slogon() {
     clear
-    echo "#############################################################"
+    echo "################################################################################"
     echo -e "#              ${RED}Ubuntu LTS v2ray带伪装一键安装脚本${PLAIN}               #"
-    echo -e "# ${GREEN}作者${PLAIN}: 网络跳越(hijk)                                      #"
-    echo -e "# ${GREEN}网址${PLAIN}: https://hijk.art                                    #"
-    echo -e "# ${GREEN}论坛${PLAIN}: https://hijk.club                                   #"
-    echo -e "# ${GREEN}TG群${PLAIN}: https://t.me/hijkclub                               #"
-    echo -e "# ${GREEN}Youtube频道${PLAIN}: https://youtube.com/channel/UCYTB--VsObzepVJtc9yvUxQ #"
-    echo "#############################################################"
+    echo -e "#                                                                           #"
+    echo -e "#                                                                           #"
+    echo -e "# ${GREEN}作者${PLAIN}: yzevoli                                             #"
+    echo -e "#                                                                           #"
+    echo -e "#                                                                           #"
+    echo "################################################################################"
     echo ""
 }
 
@@ -250,7 +249,7 @@ installV2ray() {
     bash <(curl -sL ${V6_PROXY}https://raw.githubusercontent.com/hijkpw/scripts/master/goV2.sh)
 
     if [ ! -f $CONFIG_FILE ]; then
-        colorEcho $RED " $OS 安装V2ray失败，请到 https://hijk.art 网站反馈"
+        colorEcho $RED " $OS 安装V2ray失败"
         exit 1
     fi
 
@@ -303,7 +302,7 @@ getCert() {
         ~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
         ~/.acme.sh/acme.sh   --issue -d $DOMAIN --keylength ec-256 --pre-hook "systemctl stop nginx" --post-hook "systemctl restart nginx"  --standalone
         [[ -f ~/.acme.sh/${DOMAIN}_ecc/ca.cer ]] || {
-            colorEcho $RED " 获取证书失败，请复制上面的红色文字到 https://hijk.art 反馈"
+            colorEcho $RED " 获取证书失败"
             exit 1
         }
         CERT_FILE="/etc/v2ray/${DOMAIN}.pem"
@@ -313,7 +312,7 @@ getCert() {
             --fullchain-file $CERT_FILE \
             --reloadcmd     "service nginx force-reload"
         [[ -f $CERT_FILE && -f $KEY_FILE ]] || {
-            colorEcho $RED " 获取证书失败，请到 https://hijk.art 反馈"
+            colorEcho $RED " 获取证书失败"
             exit 1
         }
     else
@@ -326,7 +325,7 @@ installNginx() {
     apt install -y nginx
     res=$(command -v nginx)
     if [[ "$res" = "" ]]; then
-        colorEcho $RED " Nginx安装失败，请到 https://hijk.art 反馈"
+        colorEcho $RED " Nginx安装失败"
         exit 1
     fi
     
@@ -439,7 +438,7 @@ EOF
     sleep 3
     res=`netstat -nltp | grep ${PORT} | grep nginx`
     if [ "${res}" = "" ]; then
-        echo -e " $OS nginx启动失败！ 请到 ${RED}https://hijk.art${PLAIN} 反馈"
+        echo -e " $OS nginx启动失败！"
         exit 1
     fi
 }
